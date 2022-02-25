@@ -58,7 +58,7 @@ class DefaultRenderer:
 
         bottom_right = pygame.Surface((surface_size, surface_size), pygame.SRCALPHA)
 
-        shadow_opacity = radius / DefaultRenderer._shadow_radius * DefaultRenderer._shadow_opacity
+        shadow_opacity = radius / DefaultRenderer._shadow_radius
         shadow_opacity = 1 if shadow_opacity >= 1 else shadow_opacity
 
         for x in range(surface_size):
@@ -158,7 +158,6 @@ class DefaultRenderer:
             actual_radius = height / 2
         
         pseudo_radius = max(actual_radius, DefaultRenderer._shadow_radius)
-        
         if not (actual_radius, pseudo_radius) in DefaultRenderer._shadow_slices.keys():
             DefaultRenderer._precompute_shadow_slices(actual_radius, pseudo_radius)
         DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['used'] = True
@@ -276,8 +275,6 @@ class DefaultRenderer:
             )
         )
 
-
-
     @staticmethod
     def tick():
         for key in DefaultRenderer._shadow_slices.keys():
@@ -288,9 +285,13 @@ class DefaultRenderer:
     def render(widget: Widget, delta: float):
         if isinstance(widget, Container):
             widget.surface.fill(DefaultRenderer._color.t)
+            shadow_surface = pygame.Surface((width(), height()), pygame.SRCALPHA)
             for child in widget.floating_widgets:
-                DefaultRenderer._draw_rect_shadow(child.pos.x, child.pos.y, child.size.x, child.size.y, widget.surface)
+                DefaultRenderer._draw_rect_shadow(child.pos.x, child.pos.y, child.size.x, child.size.y, shadow_surface)
+            shadow_surface.set_alpha(DefaultRenderer._shadow_opacity * 255)
+            widget.surface.blit(shadow_surface, (0, 0))
+            for child in widget.floating_widgets:
                 DefaultRenderer.render(child, delta)
-                widget.surface.blit(child.surface, (child.pos.x, child.pos.y))
+                widget.surface.blit(rounded(child.surface, DefaultRenderer._corner_radius), (child.pos.x, child.pos.y))
         else:
             widget.surface.fill(DefaultRenderer._color.t)

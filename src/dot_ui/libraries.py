@@ -11,3 +11,4 @@ import random
 import time
 from .utils.color import Color
 from .utils.animations import *
+from .utils.draw import *
