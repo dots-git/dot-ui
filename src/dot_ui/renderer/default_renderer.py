@@ -7,7 +7,7 @@ class DefaultRenderer:
 
     _corner_radius = 5
     _shadow_radius = 10
-    _shadow_opacity = 0.3
+    _shadow_opacity = 0.7
     _shadow_offset = Vector2(4, 4)
     _color = Color.DARK_GRAY
 
@@ -50,6 +50,7 @@ class DefaultRenderer:
 
     @staticmethod
     def _precompute_shadow_slices(radius, pseudo_radius):
+        print("Precomputing shadow slices")
         cutoff_at = 0.5 / 255
         surface_size = int(
             sqrt(-log(cutoff_at)) * DefaultRenderer._shadow_radius + pseudo_radius - DefaultRenderer._shadow_radius
@@ -83,7 +84,7 @@ class DefaultRenderer:
             right = pygame.Surface((surface_size, 1), pygame.SRCALPHA)
             y = 0
             for x in range(surface_size):
-                distance = sqrt(x * x + y * y)
+                distance = x
                 actual_distance = distance - pseudo_radius + DefaultRenderer._shadow_radius
                 if actual_distance < 0:
                     alpha = 1
@@ -99,10 +100,10 @@ class DefaultRenderer:
             left = pygame.transform.rotate(right, 180)
 
 
-            right_block = pygame.Surface((surface_size, 1), pygame.SRCALPHA)
+            right_block = pygame.Surface((surface_size, DefaultRenderer._slice_block_size), pygame.SRCALPHA)
             for x in range(surface_size):
                 for y in range(DefaultRenderer._slice_block_size):
-                    distance = sqrt(x * x + y * y)
+                    distance = x
                     actual_distance = distance - pseudo_radius + DefaultRenderer._shadow_radius
                     if actual_distance < 0:
                         alpha = 1
@@ -158,7 +159,7 @@ class DefaultRenderer:
         
         pseudo_radius = max(actual_radius, DefaultRenderer._shadow_radius)
         
-        if not actual_radius in DefaultRenderer._shadow_slices.keys():
+        if not (actual_radius, pseudo_radius) in DefaultRenderer._shadow_slices.keys():
             DefaultRenderer._precompute_shadow_slices(actual_radius, pseudo_radius)
         DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['used'] = True
 
@@ -194,7 +195,31 @@ class DefaultRenderer:
             )
         )
 
-        for i in range(width - 2 * radius_offset):
+        x_range_to_fill = width - 2 * radius_offset
+        x_block_amt = int(x_range_to_fill / DefaultRenderer._slice_block_size)
+        x_block_end = x_block_amt * DefaultRenderer._slice_block_size
+        
+        y_range_to_fill = height - 2 * radius_offset
+        y_block_amt = int(y_range_to_fill / DefaultRenderer._slice_block_size)
+        y_block_end = y_block_amt * DefaultRenderer._slice_block_size
+
+        for i in range(x_block_amt):
+            surface.blit(
+                DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['top_block'],
+                (
+                    DefaultRenderer._shadow_offset.x + x + radius_offset + i * DefaultRenderer._slice_block_size, 
+                    DefaultRenderer._shadow_offset.y + y - slice_size + radius_offset
+                )
+            )
+            surface.blit(
+                DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['bottom_block'],
+                (
+                    DefaultRenderer._shadow_offset.x + x + radius_offset + i * DefaultRenderer._slice_block_size, 
+                    DefaultRenderer._shadow_offset.y + y - radius_offset + height
+                )
+            )
+
+        for i in range(x_block_end, x_range_to_fill):
             surface.blit(
                 DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['top'],
                 (
@@ -202,7 +227,31 @@ class DefaultRenderer:
                     DefaultRenderer._shadow_offset.y + y - slice_size + radius_offset
                 )
             )
-        for i in range(height - 2 * radius_offset):
+            surface.blit(
+                DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['bottom'],
+                (
+                    DefaultRenderer._shadow_offset.x + x + radius_offset + i, 
+                    DefaultRenderer._shadow_offset.y + y - radius_offset + height
+                )
+            )
+
+        for i in range(y_block_amt):
+            surface.blit(
+                DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['left_block'],
+                (
+                    DefaultRenderer._shadow_offset.x + x - slice_size + radius_offset, 
+                    DefaultRenderer._shadow_offset.y + y + radius_offset + i * DefaultRenderer._slice_block_size
+                )
+            )
+            surface.blit(
+                DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['right_block'],
+                (
+                    DefaultRenderer._shadow_offset.x + x - radius_offset + width, 
+                    DefaultRenderer._shadow_offset.y + y + radius_offset + i * DefaultRenderer._slice_block_size
+                )
+            )
+        
+        for i in range(y_block_end, y_range_to_fill):
             surface.blit(
                 DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['left'],
                 (
@@ -210,20 +259,11 @@ class DefaultRenderer:
                     DefaultRenderer._shadow_offset.y + y + radius_offset + i
                 )
             )
-        for i in range(height - 2 * radius_offset):
             surface.blit(
                 DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['right'],
                 (
                     DefaultRenderer._shadow_offset.x + x - radius_offset + width, 
                     DefaultRenderer._shadow_offset.y + y + radius_offset + i
-                )
-            )
-        for i in range(width - 2 * radius_offset):
-            surface.blit(
-                DefaultRenderer._shadow_slices[actual_radius, pseudo_radius]['bottom'],
-                (
-                    DefaultRenderer._shadow_offset.x + x + radius_offset + i, 
-                    DefaultRenderer._shadow_offset.y + y - radius_offset + height
                 )
             )
 
