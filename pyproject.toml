@@ -1,0 +1,12 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "numpy",
+    "math",
+    "pygame",
+    "random",
+    "time",
+    "os",
+    "collections"
+]
+build-backend = "setuptools.build_meta"

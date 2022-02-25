@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+src/dot_ui/__init__.py
+src/dot_ui/widgets.py
+src/dotui.egg-info/PKG-INFO
+src/dotui.egg-info/SOURCES.txt
+src/dotui.egg-info/dependency_links.txt
+src/dotui.egg-info/top_level.txt
