@@ -80,10 +80,10 @@ class AnimVec(Sequence):
         self._record_change = True
         self.keep_velocity: bool = False
 
-        self._acceleration = 0.0
-        self._acceleration_modifier = 0.0
-        self._drag = 0.0
-        
+        self._acceleration = None
+        self._acceleration_modifier = None
+        self._drag = None
+
         if acceleration is not None:
             self.acceleration = acceleration
         if acceleration_modifier is not None:
@@ -108,8 +108,8 @@ class AnimVec(Sequence):
 
         if self.animate:
             if self.loose:
-                self._change = self._change * self._drag**delta
-                self._target = self._values - self._change / math.log(self._drag)
+                self._change = self._change * drag**delta
+                self._target = self._values - self._change / math.log(drag)
             else:
                 difference_vector: np.ndarray = self._target - self._values
                 distance = np.sqrt(difference_vector.dot(difference_vector))
@@ -130,9 +130,9 @@ class AnimVec(Sequence):
                     0,
                     change,
                     distance,
-                    self._acceleration,
-                    self._acceleration_modifier,
-                    self._drag,
+                    acceleration,
+                    acceleration_modifier,
+                    drag,
                     delta,
                 )
 

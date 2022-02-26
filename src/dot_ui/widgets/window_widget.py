@@ -1,5 +1,6 @@
 from .container_widget import *
 
+
 class Window(Container):
     def __init__(self, width=1000, height=600, title="New Window", icon=None):
         Container.__init__(self, 0, 0, width, height)
@@ -45,16 +46,14 @@ class Window(Container):
         if not self._initialized:
             self.initialize()
         while True:
-            for (
-                event
-            ) in (
-                pygame.event.get()
-            ):  # gets all the events which have occured till now and keeps tab of them.
+            for event in pygame.event.get():
+                # gets all the events which have occured till now and keeps tab of them.
                 # listening for the the X button at the top
                 if event.type == pygame.QUIT:
                     self._close = True
                 self._events(event)
 
+            self._tick(self.delta)
             Widget.renderer.tick()
             Widget.renderer.render(self, self.delta)
             pygame.display.get_surface().blit(self.surface, (0, 0))
