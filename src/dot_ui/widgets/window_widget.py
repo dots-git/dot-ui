@@ -25,6 +25,8 @@ class Window(Container):
         pygame.mixer.init()  ## For sound
         pygame.font.init()
 
+        Input.init()
+
         self.screen = None
         if self.width == 0:
             self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -52,6 +54,8 @@ class Window(Container):
                 if event.type == pygame.QUIT:
                     self._close = True
                 self._events(event)
+
+            Input.tick()
 
             self._tick(self.delta)
             Widget.renderer.tick()

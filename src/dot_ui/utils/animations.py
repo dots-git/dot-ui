@@ -2,7 +2,6 @@ import math
 import numpy as np
 from collections.abc import Sequence
 from numpy.typing import _array_like, _scalars
-from pygame import Vector2
 
 
 def approx(a, b, variance):
@@ -270,10 +269,6 @@ class AnimVec(Sequence):
     @z.setter
     def z(self, value):
         self._values[2] = value
-
-    @property
-    def v2(self):
-        return Vector2(self.x, self.y)
 
     def __getitem__(self, i):
         return self._values[i]
