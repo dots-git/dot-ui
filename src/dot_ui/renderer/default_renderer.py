@@ -161,7 +161,7 @@ class DotRenderer:
             }
 
     @staticmethod
-    def _draw_rect_shadow(x, y, width, height, surface: Surface):
+    def _draw_rect_shadow(x, y, width, height, opacity_multiplier, surface: Surface):
 
         x, y, width, height = [int(v) for v in (x, y, width, height)]
 
@@ -174,7 +174,7 @@ class DotRenderer:
         min_size = min(width, height)
         pseudo_radius = max(actual_radius, DotRenderer._shadow_radius)
 
-        shadow_opacity = (min_size / 2 / pseudo_radius) ** 1
+        shadow_opacity = (min_size / 2 / pseudo_radius)
         shadow_opacity = 1 if shadow_opacity >= 1 else shadow_opacity
 
         if not pseudo_radius in DotRenderer._shadow_slices.keys():
@@ -185,15 +185,14 @@ class DotRenderer:
             "bottom_right"
         ].get_size()[0]
 
-        radius_offset = min(actual_radius, int(min_size / 2))
-        # radius_offset = 10
+        radius_offset = min(max(DotRenderer._shadow_radius - actual_radius, actual_radius), int(min_size / 2))
 
         keys = [key for key in DotRenderer._shadow_slices[pseudo_radius].keys()]
 
         for key in keys:
             if key != "used":
                 DotRenderer._shadow_slices[pseudo_radius][key].set_alpha(
-                    shadow_opacity * 255
+                    shadow_opacity * 255 * opacity_multiplier
                 )
 
         surface.blit(
@@ -352,22 +351,33 @@ class DotRenderer:
             shadow_surface = pygame.Surface((width(), height()), pygame.SRCALPHA)
             for child in widget.floating_widgets:
                 if child.has_shadow:
+                    pos = child.pos.copy()
+                    if child.size.x < 0: 
+                        pos.x = pos.x + child.size.x
+                    if child.size.y < 0: 
+                        pos.y = pos.y + child.size.y
                     DotRenderer._draw_rect_shadow(
-                        child.pos.x,
-                        child.pos.y,
-                        child.size.x,
-                        child.size.y,
+                        pos.x,
+                        pos.y,
+                        abs(child.size.x),
+                        abs(child.size.y),
+                        child.opacity,
                         shadow_surface,
                     )
             shadow_surface.set_alpha(DotRenderer._shadow_opacity * 255)
             widget.surface.blit(shadow_surface, (0, 0))
             for child in widget.floating_widgets:
                 DotRenderer.render(child, delta)
+                pos = child.pos.copy()
+                if child.size.x < 0: 
+                    pos.x = pos.x + child.size.x
+                if child.size.y < 0: 
+                    pos.y = pos.y + child.size.y
                 widget.surface.blit(
                     rounded(child.surface, DotRenderer._corner_radius),
-                    (child.pos.x, child.pos.y),
+                    (pos.x, pos.y),
                 )
         elif isinstance(widget, Text):
             pass
         else:
-            widget.surface.fill(DotRenderer._color.t)
+            widget.surface.fill(DotRenderer._color.t if not widget.background_color else widget.background_color)

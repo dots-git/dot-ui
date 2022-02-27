@@ -4,6 +4,7 @@ from .container_widget import *
 class Window(Container):
     def __init__(self, width=1000, height=600, title="New Window", icon=None):
         Container.__init__(self, 0, 0, width, height)
+        self.transform.jump()
         if icon == None:
             icon = UI_MODULE_PATH + "/data/icon.png"
 
@@ -58,8 +59,12 @@ class Window(Container):
             Input.tick()
 
             self._tick(self.delta)
+
             Widget.renderer.tick()
+
             Widget.renderer.render(self, self.delta)
+
+
             pygame.display.get_surface().blit(self.surface, (0, 0))
 
             pygame.display.flip()
@@ -88,11 +93,13 @@ class Window(Container):
                         )
                     )
                     self.curr_fps = 1 / self.delta
-                    delta_list = []
+                    self.delta_list = []
                     self.fps_display_update_time = self.fps_update_interval
+            
             if self._close:
                 pygame.quit()
                 return
+            
 
     def close(self):
         self._close = True

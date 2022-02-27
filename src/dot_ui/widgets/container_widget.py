@@ -17,4 +17,7 @@ class Container(Widget):
     def _tick(self, delta):
         super()._tick(delta)
         for widget in self.floating_widgets:
+            if widget._is_garbage:
+                self.floating_widgets.remove(widget)
+        for widget in self.floating_widgets:
             widget._tick(delta)

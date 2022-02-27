@@ -1,26 +1,18 @@
-from dot_ui import Window, Widget, Container, Mouse, DotRenderer, Vector2
+from dot_ui import *
 
 win = Window(title="Test")
 
-DotRenderer.set_corner_radius(10)
-DotRenderer.set_shadow_radius(20)
-DotRenderer.set_shadow_offset(Vector2(7, 7))
-
 win.print_fps = True
 
-
 def move_with_mouse(self: Widget, delta):
-    new_size = Mouse.pos - self.pos
-    self.size = new_size
+    self.size = Mouse.pos - self.pos
+    if Input.action_just_released('Close'):
+        self.remove()
 
+moves_with_mouse = Widget(100, 100, 100, 100)
+moves_with_mouse.add_behaviour('tick', move_with_mouse)
 
-container = Container(10, 10, 700, 400)
-
-
-moves_with_mouse = Widget(10, 10, 100, 100)
-moves_with_mouse.add_behaviour("tick", move_with_mouse)
-
-container.add_widget(moves_with_mouse)
+Input.add_action('Close', KeyCombination(Key.q, Key.l_ctrl))
 
 win.floating_widgets.append(moves_with_mouse)
 win.open()

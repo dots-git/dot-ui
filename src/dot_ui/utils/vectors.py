@@ -44,6 +44,9 @@ class Vector2:
 
     def asarray(self):
         return np.asarray([self.x, self.y])
+    
+    def copy(self):
+        return Vector2(self.x, self.y)
 
     def __getitem__(self, index):
         return self.asarray()[index]
@@ -102,3 +105,7 @@ class IVecAnim(Vector2):
 
     def __setitem__(self, index, value):
         self._anim_vec[self._start_index : self._end_index][index] = value
+
+    def jump(self):
+        for i in range(self._start_index, self._end_index):
+            self._anim_vec.jump(i)
