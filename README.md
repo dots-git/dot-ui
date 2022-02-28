@@ -34,3 +34,24 @@ win.add_widget(widget)
 win.open()
 ```
 ![Window with widget](https://github.com/dots-git/dot-ui/blob/main/docs/assets/window_with_widget.png?raw=true)
+
+## Changing renderer settings
+Some window and widget properties are universal and are controlled by the renderer. You can customize these settings by calling the corresponding setter on the renderer (DotRenderer by default):
+```python
+from dot_ui import *
+
+DotRenderer.set_corner_radius(0)
+DotRenderer.set_shadow_offset(Vector2(-2, -2))
+DotRenderer.set_shadow_radius(10)
+DotRenderer.set_default_color(Color.GREEN)
+
+
+win = Window(title="Demo")
+
+widget = Widget(10, 10)
+
+win.add_widget(widget)
+
+win.open()
+```
+![Changed renderer settings](https://github.com/dots-git/dot-ui/blob/main/docs/assets/changed_renderer_settings.png?raw=true)

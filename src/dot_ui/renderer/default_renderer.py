@@ -383,8 +383,12 @@ class DotRenderer:
 
     @staticmethod
     def render(widget: Widget, delta: float):
+        widget.surface.fill(
+            widget.background_color
+            if widget.background_color
+            else DotRenderer._color.t
+        )
         if isinstance(widget, Container):
-            widget.surface.fill(DotRenderer._color.t)
             shadow_surface = pygame.Surface((width(), height()), pygame.SRCALPHA)
             for child in widget.floating_widgets:
                 if not child.background_color or child.background_color[3] != 0:
@@ -417,8 +421,4 @@ class DotRenderer:
         elif isinstance(widget, Text):
             pass
         else:
-            widget.surface.fill(
-                DotRenderer._color.t
-                if not widget.background_color
-                else widget.background_color
-            )
+            pass
