@@ -6,9 +6,9 @@ class DotRenderer:
     """A class for rendering Renderer content"""
 
     _corner_radius = 7
-    _shadow_radius = 30
-    _shadow_opacity = 0.7
-    _shadow_offset = Vector2(4, 4)
+    _shadow_radius = 10
+    _shadow_opacity = .6
+    _shadow_offset = Vector2(5, 5)
     _color = Color.DARK_GRAY
 
     # Precomputed shadow slices to allow for
@@ -25,7 +25,8 @@ class DotRenderer:
 
     @staticmethod
     def update():
-        DotRenderer._precompute_shadow_slices()
+        DotRenderer._shadow_slices = {}
+        DotRenderer._shadow_surfaces = {}
 
     @staticmethod
     def set_default_color(color):
@@ -56,7 +57,7 @@ class DotRenderer:
         DotRenderer._shadow_opacity = opacity
 
     @staticmethod
-    def _precompute_shadow_slices(shadow_opacity, pseudo_radius):
+    def _precompute_shadow_slices(pseudo_radius):
         cutoff_at = 0.5 / 255
         surface_size = int(
             sqrt(-log(cutoff_at)) * DotRenderer._shadow_radius
@@ -76,7 +77,6 @@ class DotRenderer:
                     alpha = (
                         exp(-((actual_distance / DotRenderer._shadow_radius) ** 2))
                         * 255
-                        * shadow_opacity
                     )
                     mod = alpha % 1
                     alpha = int(alpha) + (
@@ -99,7 +99,6 @@ class DotRenderer:
                 alpha = (
                     exp(-((actual_distance / DotRenderer._shadow_radius) ** 2))
                     * 255
-                    * shadow_opacity
                 )
                 mod = alpha % 1
                 alpha = int(alpha) + (1 if alpha < 254 and mod > random.random() else 0)
@@ -122,7 +121,6 @@ class DotRenderer:
                     alpha = (
                         exp(-((actual_distance / DotRenderer._shadow_radius) ** 2))
                         * 255
-                        * shadow_opacity
                     )
                     mod = alpha % 1
                     alpha = int(alpha) + (
@@ -183,7 +181,7 @@ class DotRenderer:
 
 
         if not pseudo_radius in DotRenderer._shadow_slices.keys():
-            DotRenderer._precompute_shadow_slices(shadow_opacity, pseudo_radius)
+            DotRenderer._precompute_shadow_slices(pseudo_radius)
         DotRenderer._shadow_slices[pseudo_radius]["used"] = True
 
         slice_size = DotRenderer._shadow_slices[pseudo_radius][
@@ -396,7 +394,7 @@ class DotRenderer:
         )
         if isinstance(widget, Container):
             shadow_surface = pygame.Surface((width(), height()), pygame.SRCALPHA)
-            for child in widget.floating_widgets:
+            for child in widget.child_list:
                 if not child.background_color or child.background_color[3] != 0:
                     pos = child.pos.copy()
                     if child.size.x < 0:
@@ -413,7 +411,7 @@ class DotRenderer:
                     )
             shadow_surface.set_alpha(DotRenderer._shadow_opacity * 255)
             widget.surface.blit(shadow_surface, (0, 0))
-            for child in widget.floating_widgets:
+            for child in widget.child_list:
                 DotRenderer.render(child, delta)
                 pos = child.pos.copy()
                 if child.size.x < 0:

@@ -93,9 +93,9 @@ class Window(Container):
                     print(
                         "Fps: %i (Min: %i, Max: %i)"
                         % (
-                            len(self.delta_list) / sum(self.delta_list),
-                            1 / max(self.delta_list),
-                            1 / min(self.delta_list),
+                            round(len(self.delta_list) / sum(self.delta_list)),
+                            round(1 / max(self.delta_list)),
+                            round(1 / min(self.delta_list)),
                         )
                     )
                     self.curr_fps = 1 / self.delta

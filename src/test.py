@@ -1,25 +1,25 @@
 from dot_ui import *
 
-Input.add_action("Print Delta", Key.D, 0)
-Input.add_action(
-    "Close", KeyCombination(Key.L_CTRL, Key.Q), KeyCombination(Key.R_CTRL, Key.Q)
-)
+DotRenderer.set_shadow_radius(100)
 
 win = Window(title="Demo")
 
+win.print_fps = True
 
-def input_demo(self: Widget, delta):
-    if Input.action_pressed("Print Delta"):
-        print(delta)
-    
-    if Input.action_just_pressed("Close"):
-        self.close()
+def movable_init(self: Widget):
+    self.moving = False
 
+def movable(self: Widget, delta: float):
+    if Mouse.just_pressed_left and Mouse.pos.in_rect(self.transform):
+        self.moving = True
+    elif Mouse.just_released_left:
+        self.moving = False
 
-widget = Widget(10, 10)
+    if self.moving:
+        self.pos += Mouse.movement
 
-widget.add_behaviour("Input Demo", input_demo)
-
-win.add_widget(widget)
+wid = Widget()
+wid.add_behaviour("Movable", movable, movable_init)
+win.add_widget(wid)
 
 win.open()

@@ -351,8 +351,10 @@ class Key:
     def events(event):
         if event.type == pygame.KEYDOWN:
             Key.just_pressed[np.where(Key.ids == event.key)[0][0]] = True
+            Key.pressed[np.where(Key.ids == event.key)[0][0]] = True
         if event.type == pygame.KEYUP:
             Key.just_released[np.where(Key.ids == event.key)[0][0]] = True
+            Key.pressed[np.where(Key.ids == event.key)[0][0]] = False
 
     @staticmethod
     def set_repeat(delay=None, interval=None):

@@ -5,10 +5,13 @@ An easy to use yet good-looking UI creation framework for Python
 * [Basics](#basics)
     * [Creating a window](#creating-a-window)
     * [Adding widgets](#adding-widgets)
+    * [Changing renderer settings](#changing-renderer-settings)
+    * [Adding Behaviours](#adding-behaviours)
+    * [Taking inputs](#taking-inputs)
 
 # Basics
 ## Creating a window
-Creating a Window is as easy as creating a window object and calling open():
+Opening a Window is as easy as creating a window object and calling open():
 ```python
 from dot_ui import *
 
