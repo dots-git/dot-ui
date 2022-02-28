@@ -1,6 +1,6 @@
 from dot_ui import *
 
-win = Window(title="Test")
+win = Window(title="Demo")
 
 # DotRenderer.set_shadow_offset(Vector2(13, 13))
 # AnimVec.set_default_acceleration(2000)
@@ -57,4 +57,9 @@ win = Window(title="Test")
 # )
 
 # win.add_widget(moves_with_mouse_and_keys)
+
+widget = Widget(10, 10)
+
+win.add_widget(widget)
+
 win.open()

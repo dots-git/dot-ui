@@ -25,7 +25,7 @@ Adding a widget is no more compicated. You create the widget and add it to the w
 ```python
 from dot_ui import Window, Widget
 
-win = Window()
+win = Window("Demo")
 
 widget = Widget(10, 10)
 
@@ -33,3 +33,4 @@ win.add_widget(widget)
 
 win.open()
 ```
+![Window with widget](https://github.com/dots-git/dot-ui/blob/main/docs/assets/window_with_widget.png?raw=true)
