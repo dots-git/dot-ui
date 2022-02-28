@@ -1,5 +1,17 @@
 # dot-ui
 An easy to use yet good-looking UI creation framework for Python
 
-## Documentation:
-[![Documentation](https://cdn.iconscout.com/icon/free/png-256/documentation-1502741-1272951.png)](google.com)
+## Contents
+[Basics](#basics)
+
+# Basics
+## Creating a window
+Creating a Window is as easy as creating a window object and calling open():
+```python
+from dot_ui import Window
+
+win = Window()
+
+win.open()
+```
+![Result]()
