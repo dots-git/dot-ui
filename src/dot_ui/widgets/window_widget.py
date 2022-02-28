@@ -2,7 +2,9 @@ from .container_widget import *
 
 
 class Window(Container):
-    def __init__(self, width=1000, height=600, title="New Window", icon=None):
+    def __init__(
+        self, width=1000, height=600, title="New Window", icon=None, fullscreen=False
+    ):
         Container.__init__(self, 0, 0, width, height)
         self.transform.jump()
         if icon == None:
@@ -21,6 +23,8 @@ class Window(Container):
 
         self._initialized = False
 
+        self._fullscreen = fullscreen
+
     def initialize(self):
         pygame.init()
         pygame.mixer.init()  ## For sound
@@ -29,7 +33,7 @@ class Window(Container):
         Input.init()
 
         self.screen = None
-        if self.width == 0:
+        if self._fullscreen:
             self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         else:
             self.screen = pygame.display.set_mode(
@@ -55,7 +59,7 @@ class Window(Container):
             for event in pygame.event.get():
                 # gets all the events which have occured till now and keeps tab of them.
                 # listening for the the X button at the top
-                Key.events(event)
+                Input.events(event)
                 if event.type == pygame.QUIT:
                     self._close = True
                 self._events(event)
@@ -116,3 +120,20 @@ class Window(Container):
     @max_fps.setter
     def max_fps(self, value):
         self._min_delta = 1 / value
+
+    @property
+    def fullscreen(self):
+        return self._fullscreen
+
+    @fullscreen.setter
+    def fullscreen(self, value):
+
+        if self._fullscreen != value and self._initialized:
+            if value:
+                self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            else:
+                self.screen = pygame.display.set_mode(
+                    (self.width, self.height), pygame.RESIZABLE
+                )
+
+        self._fullscreen = value

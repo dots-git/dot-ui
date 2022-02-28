@@ -347,6 +347,7 @@ class Key:
         Key.just_pressed  = np.zeros((len(Key.ids),), dtype=np.bool_)
         Key.just_released = np.zeros((len(Key.ids),), dtype=np.bool_)
     
+    @staticmethod
     def events(event):
         if event.type == pygame.KEYDOWN:
             Key.just_pressed[np.where(Key.ids == event.key)[0][0]] = True

@@ -16,7 +16,7 @@ class Widget(object):
     def set_renderer(renderer: type):
         Widget.renderer = renderer
 
-    def __init__(self, x, y, width, height):
+    def __init__(self, x = 0, y = 0, width = 100, height = 100):
         self.transform = AnimVec([x, y, width, height, 0])
 
         self.scale_around_center(self.size[:] * 0.5)

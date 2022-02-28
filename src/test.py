@@ -1,6 +1,6 @@
 from dot_ui import *
 
-win = Window()
+win = Window(title="Test")
 
 # DotRenderer.set_shadow_offset(Vector2(13, 13))
 # AnimVec.set_default_acceleration(2000)

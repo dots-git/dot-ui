@@ -86,6 +86,9 @@ class Vector2:
             return Vector2(self.x / other.x, self.y / other.y)
         else:
             return Vector2(self.x / other, self.y / other)
+    
+    def __eq__(self, other: "Vector2"):
+        return self.x == other.x and self.y == other.y
 
     def __str__(self):
         return type(self).__name__ + "(" + str(self.x) + ", " + str(self.y) + ")"

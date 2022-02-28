@@ -28,6 +28,10 @@ class Input:
     def tick():
         Key.tick()
         Mouse.tick()
+    
+    def events(event):
+        Key.events(event)
+        Mouse.events(event)
 
     @staticmethod
     def action_pressed(action):
