@@ -44,9 +44,22 @@ class Vector2:
 
     def asarray(self):
         return np.asarray([self.x, self.y])
-    
+
     def copy(self):
         return Vector2(self.x, self.y)
+
+    def in_rect(self, x, y=None, width=None, height=None):
+        if y is None or width is None or height is None:
+            pos = x[:2]
+            size = None
+            if width is None:
+                size = x[2:4]
+            elif height is None:
+                size = width[:2]
+            x, y = pos
+            if size is not None: width, height = size
+            
+        return x < self.x < x + width and y < self.y < y + height
 
     def __getitem__(self, index):
         return self.asarray()[index]
@@ -68,7 +81,7 @@ class Vector2:
         else:
             return Vector2(self.x * other, self.y * other)
 
-    def __div__(self, other: "Vector2 | float | int"):
+    def __truediv__(self, other: "Vector2 | float | int"):
         if isinstance(other, Vector2):
             return Vector2(self.x / other.x, self.y / other.y)
         else:
@@ -109,3 +122,19 @@ class IVecAnim(Vector2):
     def jump(self):
         for i in range(self._start_index, self._end_index):
             self._anim_vec.jump(i)
+
+    def __iadd__(self, other: Vector2):
+        self._anim_vec._target[self._start_index : self._end_index] += other.asarray()
+        return self
+
+    def __isub__(self, other: Vector2):
+        self._anim_vec._target[self._start_index : self._end_index] -= other.asarray()
+        return self
+
+    def __imul__(self, other: Vector2):
+        self._anim_vec._target[self._start_index : self._end_index] *= other.asarray()
+        return self
+
+    def __idiv__(self, other: Vector2):
+        self._anim_vec._target[self._start_index : self._end_index] /= other.asarray()
+        return self

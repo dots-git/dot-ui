@@ -66,10 +66,10 @@ class Input:
         raise ValueError('Action "' + action + '" does not exist')
 
     @staticmethod
-    def add_action(action_name, key = None):
+    def add_action(action_name, *args):
         Input.actions[action_name] = []
-        if key is not None:
-            Input.add_key_to(action_name, key)
+        if args is not None:
+            Input.add_key_to(action_name, *args)
 
     @staticmethod
     def remove_action(action_name):
@@ -79,13 +79,10 @@ class Input:
             raise ValueError('Action "' + action_name + '" does not exist')
 
     @staticmethod
-    def add_key_to(action_name, key):
+    def add_key_to(action_name, *args):
         try:
-            if isinstance(key, Iterable):
-                for k in key:
-                    Input.actions[action_name].append(k)
-            else:
-                Input.actions[action_name].append(key)
+            for k in args:
+                Input.actions[action_name].append(k)
         except KeyError:
             raise ValueError('Action "' + action_name + '" does not exist')
 

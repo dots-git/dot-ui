@@ -8,7 +8,7 @@ class Text(Widget):
         y,
         width,
         height,
-        Text,
+        text,
         alignment_x="center",
         alignment_y="center",
         typeface="",
@@ -17,4 +17,3 @@ class Text(Widget):
         italic=False,
     ):
         Widget.__init__(self, x, y, width, height)
-        self.has_shadow = False

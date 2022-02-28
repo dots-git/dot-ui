@@ -49,14 +49,16 @@ class Window(Container):
         if not self._initialized:
             self.initialize()
         while True:
+
+            Input.tick()
+
             for event in pygame.event.get():
                 # gets all the events which have occured till now and keeps tab of them.
                 # listening for the the X button at the top
+                Key.events(event)
                 if event.type == pygame.QUIT:
                     self._close = True
                 self._events(event)
-
-            Input.tick()
 
             self._tick(self.delta)
 
@@ -64,19 +66,19 @@ class Window(Container):
 
             Widget.renderer.render(self, self.delta)
 
-
             pygame.display.get_surface().blit(self.surface, (0, 0))
 
             pygame.display.flip()
 
-            if self.print_fps:
+            current_time = time.time()
+            self.delta = current_time - self.time_last_frame
+            if self.delta < self._min_delta:
+                time.sleep(self._min_delta - self.delta)
                 current_time = time.time()
                 self.delta = current_time - self.time_last_frame
-                if self.delta < self._min_delta:
-                    time.sleep(self._min_delta - self.delta)
-                    current_time = time.time()
-                    self.delta = current_time - self.time_last_frame
-                self.time_last_frame = current_time
+            self.time_last_frame = current_time
+
+            if self.print_fps:
 
                 if self.delta == 0:
                     self.delta += 10e-255
@@ -95,11 +97,10 @@ class Window(Container):
                     self.curr_fps = 1 / self.delta
                     self.delta_list = []
                     self.fps_display_update_time = self.fps_update_interval
-            
+
             if self._close:
                 pygame.quit()
                 return
-            
 
     def close(self):
         self._close = True

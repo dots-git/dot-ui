@@ -68,7 +68,9 @@ class AnimVec(Sequence):
         :attr drag: The drag to slow the movement of the values with. Curve will equate approximately to 10^(-drag*x). Leave at None for default
         """
         self._values: np.ndarray[np.float64] = (
-            np.array(vector, dtype=np.float64) if vector is not None else np.zeros(length, dtype=np.float64)
+            np.array(vector, dtype=np.float64)
+            if vector is not None
+            else np.zeros(length, dtype=np.float64)
         )
         self._target: np.ndarray[np.float64] = self._values.copy()
         self._change: np.ndarray[np.float64] = np.zeros(len(self), dtype=np.float64)
@@ -179,7 +181,7 @@ class AnimVec(Sequence):
 
     def distance_to_target(self):
         difference_vector: np.ndarray = self._target - self._values
-        return np.sqrt(difference_vector.dot(difference_vector)) 
+        return np.sqrt(difference_vector.dot(difference_vector))
 
     # Setters and Getters
     @property

@@ -1,6 +1,12 @@
 from ..libraries import *
-from .widget_behaviour import Behaviour
 from ..input.input_manager import *
+from typing import Callable
+
+
+class Behaviour:
+    def __init__(self, name: str, tick_function: Callable):
+        self.name = name
+        self.tick_function = tick_function
 
 
 class Widget(object):
@@ -22,22 +28,28 @@ class Widget(object):
 
         self.behaviours: "list[Behaviour]" = []
 
-        self.has_shadow = True
-
         self.background_color = None
 
         self._remove = False
-        self._is_garbage = False
 
-    def add_behaviour(self, trigger, function):
-        self.behaviours.append(Behaviour(trigger, function))
+        self.parent = None
 
-    def remove(self):
+    def change_parent(self, new_parent):
+        if self.parent is not None:
+            self.parent.remove_widget(self)
+        self.parent = new_parent
+
+    def add_behaviour(self, name, tick_function=None, init_function=None):
+        self.behaviours.append(Behaviour(name, tick_function))
+        if init_function is not None:
+            init_function(self)
+
+    def close(self):
         self._remove = True
         self.opacity = 0
-        self.scale_around_center(self.size[:] * .5)
+        self.scale_around_center(self.size[:] * 0.5)
 
-    def scale_around_center(self, width, height = None):
+    def scale_around_center(self, width, height=None):
         if height is None:
             array = iterable_to_array(width)
             width = array[0]
@@ -46,25 +58,27 @@ class Widget(object):
         self.transform._target[2:4] = width, height
         self.transform._target[:2] -= self.transform._target[2:4] / 2
 
-
     def _tick(self, delta):
 
         if self._remove and self.transform.distance_to_target() < 1:
-            self._is_garbage = True
+            self.parent.remove_widget(self)
 
         if not self._remove:
             for behaviour in self.behaviours:
-                if behaviour.trigger == "tick":
-                    behaviour.function(self, delta)
+                if behaviour.tick_function is not None:
+                    behaviour.tick_function(self, delta)
 
         self.transform.tick(delta)
 
-        if self.surface.get_size() != (
+        if self._remove:
+            self.surface = pygame.transform.scale(self.surface, self.size[:])
+        elif self.surface.get_size() != (
             round(self.transform[2]),
             round(self.transform[3]),
         ):
             new_surface = pygame.Surface(
-                (abs(round(self.transform[2])), abs(round(self.transform[3]))), pygame.SRCALPHA
+                (abs(round(self.transform[2])), abs(round(self.transform[3]))),
+                pygame.SRCALPHA,
             )
             new_surface.blit(self.surface, (0, 0))
             self.surface = new_surface
@@ -78,6 +92,8 @@ class Widget(object):
 
     @pos.setter
     def pos(self, value):
+        if isinstance(value, IVecAnim):
+            value = value._anim_vec.target[value._start_index : value._end_index]
         self.transform[:2] = value[:]
 
     @property
@@ -91,9 +107,7 @@ class Widget(object):
     @property
     def opacity(self) -> float:
         return self.transform[4]
-    
+
     @opacity.setter
     def opacity(self, value):
         self.transform[4] = value
-
-size

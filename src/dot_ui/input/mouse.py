@@ -25,6 +25,8 @@ class Mouse:
     _pressed_right_last_tick = False
 
     pos = Vector2()
+    pos_last_tick = Vector2()
+    movement = Vector2()
 
     @staticmethod
     def init():
@@ -36,7 +38,7 @@ class Mouse:
     @staticmethod
     def tick():
         Mouse._pressed_last_tick = Mouse.pressed
-        is_pressed = pygame.mouse.get_pressed()
+        is_pressed = pygame.mouse.get_pressed(5)
         Mouse.pressed = np.array(is_pressed)
 
         Mouse.just_pressed = np.logical_and(
@@ -60,4 +62,6 @@ class Mouse:
             Mouse.just_released_right,
         ) = Mouse.just_released[:3]
 
+        Mouse.pos_last_tick = Mouse.pos.copy()
         Mouse.pos[:] = pygame.mouse.get_pos()
+        Mouse.movement = Mouse.pos - Mouse.pos_last_tick

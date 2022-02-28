@@ -1,4 +1,3 @@
-from re import L
 from typing import Iterable
 import numpy as np
 

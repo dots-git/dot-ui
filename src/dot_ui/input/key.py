@@ -161,160 +161,160 @@ class Key:
             122,
         ]
     )
-
-    number_0 = 0
-    number_1 = 1
-    number_2 = 2
-    number_3 = 3
-    number_4 = 4
-    number_5 = 5
-    number_6 = 6
-    number_7 = 7
-    number_8 = 8
-    number_9 = 9
-    ac_back = 10
-    ampersand = 11
-    asterisk = 12
-    at = 13
-    backquote = 14
-    backslash = 15
-    backspace = 16
-    pause = 17
-    capslock = 18
-    caret = 19
-    clear = 20
-    colon = 21
-    comma = 22
-    currencysubunit = 23
-    currencyunit = 24
-    delete = 25
-    dollar = 26
-    down = 27
-    end = 28
-    equals = 29
-    escape = 30
-    euro = 31
-    exclaim = 32
-    f1 = 33
-    f10 = 34
-    f11 = 35
-    f12 = 36
-    f13 = 37
-    f14 = 38
-    f15 = 39
-    f2 = 40
-    f3 = 41
-    f4 = 42
-    f5 = 43
-    f6 = 44
-    f7 = 45
-    f8 = 46
-    f9 = 47
-    greater = 48
-    hash = 49
-    help = 50
-    home = 51
-    insert = 52
-    numpad0 = 53
-    numpad1 = 54
-    numpad2 = 55
-    numpad3 = 56
-    numpad4 = 57
-    numpad5 = 58
-    numpad6 = 59
-    numpad7 = 60
-    numpad8 = 61
-    numpad9 = 62
-    numpad_0 = 63
-    numpad_1 = 64
-    numpad_2 = 65
-    numpad_3 = 66
-    numpad_4 = 67
-    numpad_5 = 68
-    numpad_6 = 69
-    numpad_7 = 70
-    numpad_8 = 71
-    numpad_9 = 72
-    numpad_divide = 73
-    numpad_enter = 74
-    numpad_equals = 75
-    numpad_minus = 76
-    numpad_multiply = 77
-    numpad_period = 78
-    numpad_plus = 79
-    l_alt = 80
-    l_ctrl = 81
-    left = 82
-    leftbracket = 83
-    leftparen = 84
-    less = 85
-    l_gui = 86
-    l_meta = 87
-    l_shift = 88
-    l_super = 89
-    menu = 90
-    minus = 91
-    mode = 92
-    numlock = 93
-    numlockclear = 94
-    pagedown = 95
-    pageup = 96
-    pause = 97
-    percent = 98
-    period = 99
-    plus = 100
-    power = 101
-    print = 102
-    screen = 103
-    question = 104
-    quote = 105
-    quotedbl = 106
-    r_alt = 107
-    r_ctrl = 108
-    enter = 109
-    r_gui = 110
-    right = 111
-    rightbracket = 112
-    rightparen = 113
-    r_meta = 114
-    r_shift = 115
-    r_super = 116
-    scrolllock = 117
-    scrollock = 118
-    semicolon = 119
-    slash = 120
-    space = 121
-    sysreq = 122
-    tab = 123
-    underscore = 124
-    unknown = 125
-    up = 126
-    a = 127
-    b = 128
-    c = 129
-    d = 130
-    e = 131
-    f = 132
-    g = 133
-    h = 134
-    i = 135
-    j = 136
-    k = 137
-    l = 138
-    m = 139
-    n = 140
-    o = 141
-    p = 142
-    q = 143
-    r = 144
-    s = 145
-    t = 146
-    u = 147
-    v = 148
-    w = 149
-    x = 150
-    y = 151
-    z = 152
+    
+    NUMBER_0 = 0
+    NUMBER_1 = 1
+    NUMBER_2 = 2
+    NUMBER_3 = 3
+    NUMBER_4 = 4
+    NUMBER_5 = 5
+    NUMBER_6 = 6
+    NUMBER_7 = 7
+    NUMBER_8 = 8
+    NUMBER_9 = 9
+    AC_BACK = 10
+    AMPERSAND = 11
+    ASTERISK = 12
+    AT = 13
+    BACKQUOTE = 14
+    BACKSLASH = 15
+    BACKSPACE = 16
+    PAUSE = 17
+    CAPSLOCK = 18
+    CARET = 19
+    CLEAR = 20
+    COLON = 21
+    COMMA = 22
+    CURRENCYSUBUNIT = 23
+    CURRENCYUNIT = 24
+    DELETE = 25
+    DOLLAR = 26
+    DOWN = 27
+    END = 28
+    EQUALS = 29
+    ESCAPE = 30
+    EURO = 31
+    EXCLAIM = 32
+    F1 = 33
+    F10 = 34
+    F11 = 35
+    F12 = 36
+    F13 = 37
+    F14 = 38
+    F15 = 39
+    F2 = 40
+    F3 = 41
+    F4 = 42
+    F5 = 43
+    F6 = 44
+    F7 = 45
+    F8 = 46
+    F9 = 47
+    GREATER = 48
+    HASH = 49
+    HELP = 50
+    HOME = 51
+    INSERT = 52
+    NUMPAD_0 = 53
+    NUMPAD_1 = 54
+    NUMPAD_2 = 55
+    NUMPAD_3 = 56
+    NUMPAD_4 = 57
+    NUMPAD_5 = 58
+    NUMPAD_6 = 59
+    NUMPAD_7 = 60
+    NUMPAD_8 = 61
+    NUMPAD_9 = 62
+    KEYPAD_0 = 63
+    KEYPAD_1 = 64
+    KEYPAD_2 = 65
+    KEYPAD_3 = 66
+    KEYPAD_4 = 67
+    KEYPAD_5 = 68
+    KEYPAD_6 = 69
+    KEYPAD_7 = 70
+    KEYPAD_8 = 71
+    KEYPAD_9 = 72
+    KEYPAD_DIVIDE = 73
+    KEYPAD_ENTER = 74
+    KEYPAD_EQUALS = 75
+    KEYPAD_MINUS = 76
+    KEYPAD_MULTIPLY = 77
+    KEYPAD_PERIOD = 78
+    KEYPAD_PLUS = 79
+    L_ALT = 80
+    L_CTRL = 81
+    LEFT = 82
+    LEFTBRACKET = 83
+    LEFTPAREN = 84
+    LESS = 85
+    L_GUI = 86
+    L_META = 87
+    L_SHIFT = 88
+    L_SUPER = 89
+    MENU = 90
+    MINUS = 91
+    MODE = 92
+    NUMLOCK = 93
+    NUMLOCKCLEAR = 94
+    PAGEDOWN = 95
+    PAGEUP = 96
+    PAUSE = 97
+    PERCENT = 98
+    PERIOD = 99
+    PLUS = 100
+    POWER = 101
+    PRINT = 102
+    SCREEN = 103
+    QUESTION = 104
+    QUOTE = 105
+    QUOTEDBL = 106
+    R_ALT = 107
+    R_CTRL = 108
+    ENTER = 109
+    R_GUI = 110
+    RIGHT = 111
+    RIGHTBRACKET = 112
+    RIGHTPAREN = 113
+    R_META = 114
+    R_SHIFT = 115
+    R_SUPER = 116
+    SCROLLLOCK = 117
+    SCROLLOCK = 118
+    SEMICOLON = 119
+    SLASH = 120
+    SPACE = 121
+    SYSREQ = 122
+    TAB = 123
+    UNDERSCORE = 124
+    UNKNOWN = 125
+    UP = 126
+    A = 127
+    B = 128
+    C = 129
+    D = 130
+    E = 131
+    F = 132
+    G = 133
+    H = 134
+    I = 135
+    J = 136
+    K = 137
+    L = 138
+    M = 139
+    N = 140
+    O = 141
+    P = 142
+    Q = 143
+    R = 144
+    S = 145
+    T = 146
+    U = 147
+    V = 148
+    W = 149
+    X = 150
+    Y = 151
+    Z = 152
 
     pressed = np.array([])
     just_pressed = pressed.copy()
@@ -322,13 +322,21 @@ class Key:
 
     _pressed_last_tick = pressed.copy()
 
+    repeat = (None, None)
+
+    _initialized = False
+
     @staticmethod
     def init():
-        Key.pressed = np.array([False for _ in range(len(Key.ids))])
+        Key.pressed = np.zeros((len(Key.ids),), dtype=np.bool_)
         Key.just_pressed = Key.pressed.copy()
         Key.just_released = Key.pressed.copy()
 
         Key._pressed_last_tick = Key.pressed.copy()
+
+        Key._initialized = True
+
+        Key.set_repeat(Key.repeat[0], Key.repeat[1])
 
     @staticmethod
     def tick():
@@ -336,18 +344,23 @@ class Key:
         is_pressed = pygame.key.get_pressed()
         for i in range(len(Key.ids)):
             Key.pressed[i] = is_pressed[Key.ids[i]]
-        Key.just_pressed = np.logical_and(
-            np.logical_not(Key._pressed_last_tick), Key.pressed
-        )
-        Key.just_released = np.logical_and(
-            Key._pressed_last_tick, np.logical_not(Key.pressed)
-        )
+        Key.just_pressed  = np.zeros((len(Key.ids),), dtype=np.bool_)
+        Key.just_released = np.zeros((len(Key.ids),), dtype=np.bool_)
+    
+    def events(event):
+        if event.type == pygame.KEYDOWN:
+            Key.just_pressed[np.where(Key.ids == event.key)[0][0]] = True
+        if event.type == pygame.KEYUP:
+            Key.just_released[np.where(Key.ids == event.key)[0][0]] = True
 
     @staticmethod
     def set_repeat(delay=None, interval=None):
-        repeat = [pygame.key.get_repeat()[i] for i in range(2)]
-        if delay is not None:
-            repeat[0] = delay
-        if interval is not None:
-            repeat[1] = interval
-        pygame.key.set_repeat(repeat[0], repeat[1])
+        if Key._initialized:
+            repeat = [pygame.key.get_repeat()[i] for i in range(2)]
+            if delay is not None:
+                repeat[0] = delay
+            if interval is not None:
+                repeat[1] = interval
+            pygame.key.set_repeat(repeat[0], repeat[1])
+        else:
+            Key.repeat = (delay, interval)

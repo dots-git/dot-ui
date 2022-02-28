@@ -1,4 +1,3 @@
-from tkinter import W
 from .base_widget import *
 
 
@@ -8,16 +7,22 @@ class Container(Widget):
         self.widget_grid: "list[list[Widget]]" = []
         self.floating_widgets: "list[Widget]" = []
 
-    def add_widget(self, widget, floating=True):
+    def add_widget(self, widget: Widget, floating=True):
+        widget.change_parent(self)
         if floating:
             self.floating_widgets.append(widget)
         else:
             self.widget_grid.append(widget)
 
+    def remove_widget(self, widget):
+        for w in self.widget_grid:
+            if widget is w:
+                self.widget_grid.remove(w)
+        for w in self.floating_widgets:
+            if widget is w:
+                self.floating_widgets.remove(w)
+
     def _tick(self, delta):
         super()._tick(delta)
-        for widget in self.floating_widgets:
-            if widget._is_garbage:
-                self.floating_widgets.remove(widget)
-        for widget in self.floating_widgets:
+        for widget in self.floating_widgets + self.widget_grid:
             widget._tick(delta)
