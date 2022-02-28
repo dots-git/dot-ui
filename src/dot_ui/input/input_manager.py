@@ -50,7 +50,7 @@ class Input:
         if action in Input.actions.keys():
             for k in Input.actions[action]:
                 if isinstance(k, KeyCombination):
-                    if all([Key.pressed[m_key] for m_key in k.keys]) and any([Key.just_pressed[m_key] for m_key in k.keys]):
+                    if all([Key.pressed[m_key] for m_key in k.keys]) and any([not Key._pressed_last_tick[m_key] for m_key in k.keys]):
                         return True
                 elif Key.just_pressed[k]:
                     return True
@@ -62,7 +62,7 @@ class Input:
         if action in Input.actions.keys():
             for k in Input.actions[action]:
                 if isinstance(k, KeyCombination):
-                    if all([Key._pressed_last_tick[m_key] for m_key in k.keys]) and any([Key.just_released[m_key] for m_key in k.keys]):
+                    if all([Key._pressed_last_tick[m_key] for m_key in k.keys]) and any([not Key.pressed[m_key] for m_key in k.keys]):
                         return True
                 elif Key.just_released[k]:
                     return True

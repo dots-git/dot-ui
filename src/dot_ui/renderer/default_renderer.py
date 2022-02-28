@@ -45,9 +45,15 @@ class DotRenderer:
         if update:
             DotRenderer.update()
 
+    @staticmethod
     def set_shadow_offset(offset: Vector2):
         """Change the shadow offset"""
         DotRenderer._shadow_offset = offset
+    
+    @staticmethod
+    def set_shadow_opacity(opacity: float):
+        """Change the shadow opacity """
+        DotRenderer._shadow_opacity = opacity
 
     @staticmethod
     def _precompute_shadow_slices(shadow_opacity, pseudo_radius):
