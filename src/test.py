@@ -1,25 +1,13 @@
 from dot_ui import *
 
-DotRenderer.set_shadow_radius(100)
 
-win = Window(title="Demo")
+DotRenderer._corner_radius = 0
 
-win.print_fps = True
 
-def movable_init(self: Widget):
-    self.moving = False
+def print_fps(self: Widget, delta: float):
+    print(1 / delta)
 
-def movable(self: Widget, delta: float):
-    if Mouse.just_pressed_left and Mouse.pos.in_rect(self.transform):
-        self.moving = True
-    elif Mouse.just_released_left:
-        self.moving = False
 
-    if self.moving:
-        self.pos += Mouse.movement
-
-wid = Widget()
-wid.add_behaviour("Movable", movable, movable_init)
-win.add_widget(wid)
-
-win.open()
+Window(
+    b_print=print_fps
+).open()

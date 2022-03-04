@@ -3,9 +3,9 @@ from .container_widget import *
 
 class Window(Container):
     def __init__(
-        self, width=1000, height=600, title="New Window", icon=None, fullscreen=False
+        self, *args, width=1000, height=600, title="New Window", icon=None, fullscreen=False, **kwargs
     ):
-        Container.__init__(self, 0, 0, width, height)
+        Container.__init__(self, *args, x=0, y=0, width=width, height=height, **kwargs)
         self.transform.jump()
         if icon == None:
             icon = UI_MODULE_PATH + "/data/icon.png"
@@ -32,6 +32,8 @@ class Window(Container):
 
         Input.init()
 
+        self._init()
+
         self.screen = None
         if self._fullscreen:
             self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -53,10 +55,18 @@ class Window(Container):
         if not self._initialized:
             self.initialize()
         while True:
+            self.size = pygame.display.get_surface().get_size()
+            self.size.jump()
+
+            Timer.autoprint = True
+
 
             Input.tick()
 
-            for event in pygame.event.get():
+            
+            events = pygame.event.get()
+
+            for event in events:
                 # gets all the events which have occured till now and keeps tab of them.
                 # listening for the the X button at the top
                 Input.events(event)

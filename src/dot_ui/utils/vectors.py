@@ -1,3 +1,4 @@
+from copy import copy
 from .animations import AnimVec
 from math import sqrt, atan2
 from .general import *
@@ -60,6 +61,15 @@ class Vector2:
             if size is not None: width, height = size
             
         return x < self.x < x + width and y < self.y < y + height
+    
+    def round(self):
+        return Vector2(round(self.x), round(self.y))
+    
+    def floor(self):
+        return Vector2(floor(self.x), floor(self.y))
+    
+    def roof(self):
+        return Vector2(roof(self.x),  roof(self.y) )
 
     def __getitem__(self, index):
         return self.asarray()[index]
@@ -102,11 +112,11 @@ class IVecAnim(Vector2):
 
     @property
     def x(self):
-        return self._anim_vec[self._start_index + 0]
+        return self._anim_vec[self._start_index]
 
     @x.setter
     def x(self, value):
-        self._anim_vec[self._start_index + 0] = value
+        self._anim_vec[self._start_index] = value
 
     @property
     def y(self):

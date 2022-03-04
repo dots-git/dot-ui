@@ -16,7 +16,7 @@ class Widget(object):
     def set_renderer(renderer: type):
         Widget.renderer = renderer
 
-    def __init__(self, x = 0, y = 0, width = 100, height = 100):
+    def __init__(self, x=0, y=0, width=100, height=100, has_shadow=False, **kwargs):
         self.transform = AnimVec([x, y, width, height, 0])
 
         self.scale_around_center(self.size[:] * 0.5)
@@ -28,11 +28,40 @@ class Widget(object):
 
         self.behaviours: "list[Behaviour]" = []
 
-        self.background_color = None
+        self.background_color: Color = None
 
         self._remove = False
 
-        self.parent = None
+        self.has_shadow = has_shadow
+
+        self.parent: Widget = None
+
+        for key in kwargs.keys():
+            behaviour_keys = [
+                "b_",
+                "behav_",
+                "behaviour_",
+                "script_",
+                "B_",
+                "Behav_",
+                "Behaviour_",
+                "Script_"
+            ]
+
+            for behaviour_key in behaviour_keys:
+                if key.startswith(behaviour_key):
+                    item = kwargs[key]
+
+                    tick_function = item
+                    init_function = None
+
+                    if isinstance(item, Iterable):
+                        if len(item) > 0:
+                            tick_function = item[0].tick
+                        if len(item) > 1:
+                            init_function = item[1].tick
+
+                    self.add_behaviour(key[len(behaviour_key):], tick_function, init_function)
 
     def change_parent(self, new_parent):
         if self.parent is not None:
@@ -58,6 +87,9 @@ class Widget(object):
         self.transform._target[2:4] = width, height
         self.transform._target[:2] -= self.transform._target[2:4] / 2
 
+    def _init(self):
+        self.init()
+
     def _tick(self, delta):
 
         if self._remove and self.transform.distance_to_target() < 1:
@@ -67,6 +99,7 @@ class Widget(object):
             for behaviour in self.behaviours:
                 if behaviour.tick_function is not None:
                     behaviour.tick_function(self, delta)
+        self.tick(delta)
 
         self.transform.tick(delta)
 
@@ -84,6 +117,12 @@ class Widget(object):
             self.surface = new_surface
 
     def _events(self, event):
+        pass
+
+    def init(self):
+        pass
+
+    def tick(self, delta):
         pass
 
     @property

@@ -2,11 +2,14 @@ from .base_widget import *
 
 
 class Container(Widget):
-    def __init__(self, x = 0, y = 0, width = 100, height = 100, floating = True):
-        Widget.__init__(self, x, y, width, height)
+    def __init__(self, *args, x = 0, y = 0, width = 100, height = 100, floating = True, **kwargs):
+        Widget.__init__(self, x, y, width, height, **kwargs)
         self._widget_grid: "list[list[Widget]]" = [[]]
         self._floating_widgets: "list[Widget]" = []
         self._floating = floating
+
+        for widget in args:
+            self.add_widget(widget)
 
     def add_widget(self, widget: Widget, x = None, y = None):
         widget.change_parent(self)
@@ -29,6 +32,11 @@ class Container(Widget):
 
     def set_grid_size(self, columns: int, rows: int):
         new_grid = [[None for _ in range(columns)] for _ in range(rows)]
+
+    def _init(self):
+        Widget._init(self)
+        for widget in self.child_list:
+            widget._init()
 
     def _tick(self, delta):
         super()._tick(delta)
