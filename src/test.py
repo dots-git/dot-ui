@@ -1,13 +1,23 @@
 from dot_ui import *
 
+def fetch_data(self: Widget):
+    for i in range(10):
+        self.add_child(
+            Widget(
+                text=str(i),
+                size=Vector2(100, 100),
+                pos=Vector2(i * 100, 0),
+                color=WHITE,
+            )
+        )
 
-DotRenderer._corner_radius = 0
+List(
+    "vertical",
 
-
-def print_fps(self: Widget, delta: float):
-    print(1 / delta)
-
-
-Window(
-    b_print=print_fps
+    List(
+        "horizontal",
+        Button("Button 1"),
+        script_fetch_data=fetch_data,
+    )
+    
 ).open()

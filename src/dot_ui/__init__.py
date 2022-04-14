@@ -1,4 +1,5 @@
-from .widgets.widgets import *
-from .renderer.default_renderer import *
+from .utils.animations import AnimVec
+from .utils.color_constants import *
+from .utils.vectors import Vector2
 
-Widget.set_renderer(DotRenderer)
+from .widgets.builtin import *
