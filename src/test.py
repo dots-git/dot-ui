@@ -1,4 +1,4 @@
-from dot_ui import *
+from widgeon import *
 
 def fetch_data(self: Widget):
     for i in range(10):

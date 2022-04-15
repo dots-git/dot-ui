@@ -2,13 +2,7 @@
 requires = [
     "setuptools>=42",
     "numpy",
-    "math",
     "pygame",
-    "random",
-    "time",
-    "os",
-    "collections",
-    "typing",
-    "colorsys"
+    "thelittlethings",
 ]
 build-backend = "setuptools.build_meta"

@@ -1,9 +1,9 @@
 from math import exp
-from dot_ui.utils.vectors import Vector2
+from widgeon.utils.vectors import Vector2
 from simple_pg import *
-import dot_ui.utils.draw as draw_utils
-from dot_ui.utils.animations import AnimVec
-from dot_ui.utils.color_constants import RED, WHITE
+import widgeon.utils.draw as draw_utils
+from widgeon.utils.animations import AnimVec
+from widgeon.utils.color_constants import RED, WHITE
 
 class WaveRipple:
     all_ripples: "list[WaveRipple]" = []
