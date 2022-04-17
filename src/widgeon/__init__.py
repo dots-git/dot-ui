@@ -1,9 +1,7 @@
-# from .utils.animations import AnimVec
-# from .utils.color_constants import *
-# from .utils.vectors import Vector2
+import os
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
+del os
 
-# from .widgets.builtin import *
-
-from thelittlethings import Log
-
-Log("[style: bright]widgeon does not exist yet. sorry.")
+from .utils.animations import AnimVec
+from .utils.color_constants import *
+from .utils.vectors import Vector2

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="widgeon",
-    version="0.0.1",
+    version="0.0.2",
     author="Simon Kriele",
     author_email="kriele.simon@gmail.com",
     description="A simple tool for building UIs",
